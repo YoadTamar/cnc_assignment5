@@ -46,8 +46,6 @@ void packet_data(u_char *user, const struct pcap_pkthdr *header, const u_char *p
     ip_req = (struct iphdr*)(pkt_bytes + sizeof(struct ether_header));
     icmp_req = (struct icmphdr*)(pkt_bytes + sizeof(struct ether_header) + sizeof(struct iphdr));
 
-    printf("Source Address: %s\n", inet_ntoa(*((struct in_addr*)&ip_req->saddr)));
-
     char replay_pack[IP_MAXPACKET] = {'\0'};
 
     // struct icmphdr *icmp = (struct icmphdr*)(replay_pack + sizeof(struct iphdr));
@@ -102,6 +100,9 @@ void packet_data(u_char *user, const struct pcap_pkthdr *header, const u_char *p
         close(sock);
         exit(1);
     }
+
+    printf("Repley has been send to: %s\n", inet_ntoa(*((struct in_addr*)&ip_req->saddr)));
+
 
     close(sock);
 }
